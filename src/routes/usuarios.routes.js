@@ -43,49 +43,49 @@ carrosRoutes.post("/", (req, res) => {
   carrosRoutes.get("/:id", (req, res) => {
     const { id } = req.params;
 
-    const user = usersList.getUserById(id);
+    const carro = carrosList.getCarroById(id);
   
-    if (!user) {
+    if (!carro) {
       return res.status(404).json({
-        message: `Usuário com id ${id} não encontrado!`,
+        message: `Carro com id ${id} não encontrado!`,
       });
     }
   
     return res.status(200).json({
-      message: `Usuário com id ${id} encontrado!`,
-      user,
+      message: `Carro com id ${id} encontrado!`,
+      carro,
     });
   });
   
   carrosRoutes.put("/:id", (req, res) => {
     const { id } = req.params;
-    const { name, email, password } = req.body;
+    const {modeloVeiculo, quilometragem, status, problemasReportados } = req.body;
     
-    const user = usersList.updateUser(id, name, email, password);
+    const carro = carrosList.updateCarros(id,modeloVeiculo, quilometragem, status, problemasReportados);
+
+    if(!modeloVeiculo || !quilometragem ){
+      return res.status(400).json({
+        message: "Os campos de modelo veículo e quilometragem são obrigatórios"
+      })
+      
+    }
+
+    if(status != "pendente" && status != "manutenção" && status != "finalizado"){
+      return res.status(400).json({
+        message: "O campo status deve ser preenchido com pendente, manutenção ou finalizado."
+      })
+    }
   
-    if (!user) {
+    if (!carro) {
       return res.status(404).json({
-        message: `Usuário com id ${id} não encontrado!`,
+        message: `Carro com id ${id} não encontrado!`,
       });
     }
   
-    return res.status(200).json({
-      message: `Usuário com id ${id} atualizado com sucesso!`,
-      user,
+    return res.status(201).json({
+      message: `Carro com id ${id} atualizado com sucesso!`,
+      carro,
     });
   });
   
-  carrosRoutes.delete("/:id", (req, res) => {
-    const { id } = req.params;
-    const user = usersList.deleteUser(id);
-    if (!user) {
-      return res.status(404).json({
-        message: `Usuário com id ${id} não encontrado!`,
-      });
-    }
-    return res.status(200).json({
-      message: `Usuário com id ${id} deletado com sucesso!`,
-      user,
-    });
-  });
 export default carrosRoutes;

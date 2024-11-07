@@ -17,39 +17,31 @@ class CarrosRepository {
         return newCarro;
     }
 
-    getUserById(id) {
-        const user = this.users.find((u) => u.id == id);
+    getCarroById(id) {
+        const carro = this.carros.find((c) => c.id == id);
 
-        if (!user) {
+        if (!carro) {
             return null;
         }
 
-        return user;
+        return carro;
     }
 
-    updateUser(id, name, email, password) {
-        const user = this.getUserById(id);
+    updateCarros(id, modeloVeiculo, quilometragem, status, problemasReportados) {
+        const carro = this.getCarroById(id);
 
-        if (!user) {
+        if (!carro) {
             return null;
         }
 
-        user.name = name;
-        user.email = email;
-        user.password = password;
+        carro.modeloVeiculo = modeloVeiculo;
+        carro.quilometragem = quilometragem;
+        carro.status = status;
+        carro.problemasReportados = problemasReportados;
 
-        return user;
+        return carro;
     }
-    
-    deleteUser(id) {
-        const user = this.getUserById(id);
-        if (!user) {
-            return null;
-        }
-                                        
-        this.users = this.users.filter((u) => u.id != id);
-        return user;
-    }
+
 }
 
 export default CarrosRepository;
