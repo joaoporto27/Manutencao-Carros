@@ -1,0 +1,55 @@
+import Carros from "./User.js";
+
+class CarrosRepository {
+    constructor() {
+        this.carros = [];
+    }
+
+    getAllCarros() {
+        return this.carros;
+    }
+
+    addCarros(modeloVeiculo, quilometragem, status, problemasReportados) {
+        const newCarro = new Carros(modeloVeiculo, quilometragem, status, problemasReportados);
+
+        this.carros.push(newCarro);
+
+        return newCarro;
+    }
+
+    getUserById(id) {
+        const user = this.users.find((u) => u.id == id);
+
+        if (!user) {
+            return null;
+        }
+
+        return user;
+    }
+
+    updateUser(id, name, email, password) {
+        const user = this.getUserById(id);
+
+        if (!user) {
+            return null;
+        }
+
+        user.name = name;
+        user.email = email;
+        user.password = password;
+
+        return user;
+    }
+    
+    deleteUser(id) {
+        const user = this.getUserById(id);
+        if (!user) {
+            return null;
+        }
+                                        
+        this.users = this.users.filter((u) => u.id != id);
+        return user;
+    }
+}
+
+export default CarrosRepository;
